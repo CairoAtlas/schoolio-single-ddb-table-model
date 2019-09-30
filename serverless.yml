@@ -18,42 +18,12 @@ provider:
 
   stage: ${opt:stage, 'funsies'}
   region: us-east-1
+  environment:
+    SCHOOLIO_TABLE_NAME: ${self:service}-${self:provider.stage}
 
-# functions:
+functions: ${file(serverless_config/functions.yml)}
 
-resources:
-  Resources:
-    SeventhGradeTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: pk
-            AttributeType: S
-          - AttributeName: sk
-            AttributeType: S
-          - AttributeName: data
-            AttributeType: S
-        KeySchema:
-          - AttributeName: pk
-            KeyType: HASH
-          - AttributeName: sk
-            KeyType: RANGE
-        GlobalSecondaryIndexes:
-          - IndexName: data_index
-            KeySchema:
-              - AttributeName: sk
-                KeyType: HASH
-              - AttributeName: data
-                KeyType: RANGE
-            Projection:
-              ProjectionType: ALL
-            ProvisionedThroughput:
-              ReadCapacityUnits: 2
-              WriteCapacityUnits: 2
-        ProvisionedThroughput:
-          ReadCapacityUnits: 2
-          WriteCapacityUnits: 2
-        TableName: ${self:service}-${self:provider.stage}
+resources: ${file(serverless_config/resources.yml)}
 
 plugins:
   - serverless-python-requirements

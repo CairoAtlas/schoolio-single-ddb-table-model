@@ -1,0 +1,21 @@
+---
+ClassesCreate:
+  handler: lambda_functions/classes/create.handler
+  description: Create class in table
+  package:
+    include:
+      - lambda_functions/classes/create.py
+
+  memorySize: 128
+  timeout: 10
+  role: VaultSubmitRole
+  events:
+    - http:
+        path: classes
+        method: post
+        authorizer: aws_iam
+        cors: true
+        request:
+          parameters:
+            paths:
+              token: true
