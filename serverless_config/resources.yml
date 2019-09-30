@@ -30,7 +30,7 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
-      TableName: ${self:service}-${self:provider.stage}-Table
+      TableName: ${self:service}-${self:provider.stage}
   CreateRole:
     Type: AWS::IAM::Role
     Properties:
@@ -56,5 +56,6 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - dynamodb:PutItem
+                  - dynamodb:DescribeTable
                 Resource:
                   - Fn::GetAtt: [SeventhGradeTable, Arn]
