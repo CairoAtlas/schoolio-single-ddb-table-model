@@ -15,13 +15,13 @@ class Schoolio(Model):
     # Table Attributes
     pk = UnicodeAttribute(hash_key=True)
     sk = UnicodeAttribute(range_key=True)
-    data = UnicodeAttribute()
-    date = UTCDateTimeAttribute()
-    first_name = UnicodeAttribute()
-    grade = NumberAttribute()
-    last_name = UnicodeAttribute()
-    name = UnicodeAttribute()
-    title = UnicodeAttribute()
+    data = UnicodeAttribute(null=True)
+    date = UTCDateTimeAttribute(null=True)
+    first_name = UnicodeAttribute(null=True)
+    grade = NumberAttribute(null=True)
+    last_name = UnicodeAttribute(null=True)
+    name = UnicodeAttribute(null=True)
+    title = UnicodeAttribute(null=True)
 
     # Indexes
     data_index = DataIndex()
