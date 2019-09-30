@@ -31,7 +31,7 @@ Resources:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
       TableName: ${self:service}-${self:provider.stage}-Table
-  ClassesCreateRole:
+  CreateRole:
     Type: AWS::IAM::Role
     Properties:
       RoleName: ${self:service}-${self:provider.stage}-ClassesCreateRole

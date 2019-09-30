@@ -8,7 +8,7 @@ ClassesCreate:
 
   memorySize: 128
   timeout: 10
-  role: VaultSubmitRole
+  role: CreateRole
   events:
     - http:
         path: classes
