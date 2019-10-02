@@ -1,21 +1,26 @@
 ---
 ClassesCreate:
-  handler: lambda_functions/classes/create.handler
+  handler: lambda_functions/classes.handler
   description: Create class in table
   package:
     include:
-      - lambda_functions/classes/create.py
+      - lambda_functions/classes.py
 
   memorySize: 128
   timeout: 10
-  role: CreateRole
+  role: CrudRole
   events:
     - http:
-        path: classes
-        method: post
+        path: classes/{class_id}
+        method: get
         authorizer: aws_iam
         cors: true
         request:
           parameters:
             paths:
-              token: true
+              class_id: true
+    - http:
+        path: classes
+        method: post
+        authorizer: aws_iam
+        cors: true
