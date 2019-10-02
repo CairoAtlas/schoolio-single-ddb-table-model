@@ -1,9 +1,6 @@
 import json
 import logging.config
-import uuid
-
-from models.schoolio import Schoolio
-from schemas.classes import Class, ClassSchema
+from models import classy as model
 
 SCHOOLIO = 'schoolio'
 
@@ -14,27 +11,14 @@ LOGGER.setLevel(logging.INFO)
 def handler(event, context):
     LOGGER.info(event)
     body = json.loads(event['body'])
-    class_id = f'class_{str(uuid.uuid4())}'
-    class_obj = Class(class_id, body['name'])
-    class_schema = ClassSchema(only=('name', 'pk', 'sk'))
-    class_schema.context = {
-        'pk': f'{SCHOOLIO}_{class_id}',
-        'sk': class_id
-    }
+    schoolio_class = model.Class(body['name'])
 
-    class_schema_dict = class_schema.dump(class_obj)
-
-    schoolio_class_record = Schoolio(class_schema_dict.pop('pk'), class_schema_dict.pop('sk'), **class_schema_dict)
-
-    LOGGER.info(schoolio_class_record)
-    schoolio_class_record.save()
+    LOGGER.info(schoolio_class)
+    schoolio_class.save()
 
     return {
         'statusCode': 201,
-        'body': json.dumps({
-            'class_id': class_id,
-            'name:': body['name']
-        })
+        'body': json.dumps(schoolio_class.save())
     }
 
 

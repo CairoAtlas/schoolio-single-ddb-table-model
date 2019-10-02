@@ -5,7 +5,7 @@ from pynamodb.attributes import (
     UnicodeAttribute, NumberAttribute, UTCDateTimeAttribute
 )
 
-from models.data_index import DataIndex
+from models.single_table.data_index import DataIndex
 
 
 class Schoolio(Model):
