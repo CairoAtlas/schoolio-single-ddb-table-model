@@ -24,3 +24,8 @@ ClassesCreate:
         method: post
         authorizer: aws_iam
         cors: true
+    - http:
+        path: classes
+        method: patch
+        authorizer: aws_iam
+        cors: true

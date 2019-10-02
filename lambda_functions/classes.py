@@ -14,7 +14,14 @@ def handler(event, context):
         request_payload = json.loads(event['body'])
         return {
             'statusCode': 201,
-            'body': json.dumps(model.Class(request_payload['name']).save())
+            'body': json.dumps(model.Class(name=request_payload['name']).save())
+        }
+    elif event['resource'] == '/classes' and event['httpMethod'] == 'PATCH' and is_valid_update(
+            json.loads(event['body'])):
+        request_payload = json.loads(event['body'])
+        return {
+            'statusCode': 200,
+            'body': json.dumps(model.Class(class_id=request_payload['class_id'], name=request_payload['name']).update())
         }
     elif event['resource'] == '/classes/{class_id}' and event['httpMethod'] == 'GET':
         class_id = event['pathParameters']['class_id']
@@ -31,3 +38,7 @@ def handler(event, context):
 
 def is_valid_create(request_payload):
     return request_payload.get('name') and len(request_payload) == 1
+
+
+def is_valid_update(request_payload):
+    return request_payload.get('name') and request_payload.get('class_id') and len(request_payload) == 2
