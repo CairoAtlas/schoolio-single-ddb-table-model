@@ -3,7 +3,6 @@ import uuid
 from schemas import classes as schema
 from models.single_table.schoolio import Schoolio
 
-
 SCHOOLIO = 'schoolio'
 
 
@@ -13,10 +12,32 @@ class Class:
         self.name = name
 
     def save(self):
-        if self.name is None:
-            raise Exception('name cannot be None for class entity')
         self._make_schoolio_object(self.class_id, self.name).save()
         return schema.Class(self.class_id, self.name).__dict__
+
+    def update(self):
+        items_to_update = self._get_items_to_update()
+        for item in items_to_update:
+            item.update(actions=[
+                Schoolio.name.set(self.name)
+            ])
+        return schema.Class(self.class_id, self.name).__dict__
+
+    def _get_items_to_update(self):
+        items = list()
+        results = Schoolio.data_index.query(self.class_id)
+        last_evaluated_key = results.last_evaluated_key
+        for item in results:
+            items.append(item)
+
+        while last_evaluated_key:
+            results = Schoolio.data_index.query(self.class_id,
+                                                last_evaluated_key=last_evaluated_key)
+            last_evaluated_key = results.last_evaluated_key
+            for item in results:
+                items.append(item)
+
+        return items
 
     @staticmethod
     def get_class_by_id(class_id):
@@ -39,4 +60,3 @@ class Class:
             'sk': class_id
         }
         return class_schema.dump(class_obj)
-

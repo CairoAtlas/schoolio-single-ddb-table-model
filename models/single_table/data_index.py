@@ -11,6 +11,8 @@ class DataIndex(GlobalSecondaryIndex):
         index_name = 'data_index'
         # All attributes are projected
         projection = AllProjection()
+        read_capacity_units = 2
+        write_capacity_units = 2
 
     # This attribute is the hash key for the index
     # Note that this attribute must also exist
