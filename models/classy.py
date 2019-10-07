@@ -12,7 +12,7 @@ class Class:
         self.name = name
 
     def save(self):
-        self._make_schoolio_object(self.class_id, self.name).save()
+        self.make_class_schoolio_object(self.class_id, self.name).save()
         return schema.Class(self.class_id, self.name).__dict__
 
     def update(self):
@@ -45,14 +45,14 @@ class Class:
         return schema.Class(schoolio_class_record.sk, schoolio_class_record.data).__dict__
 
     @staticmethod
-    def _make_schoolio_object(class_id, name):
-        class_schema_dict = Class._make_class_schema_dict(class_id, name)
+    def make_class_schoolio_object(class_id, name):
+        class_schema_dict = Class.make_class_schema_dict(class_id, name)
         schoolio_class_record = Schoolio(class_schema_dict.pop('pk'), class_schema_dict.pop('sk'),
                                          **class_schema_dict)
         return schoolio_class_record
 
     @staticmethod
-    def _make_class_schema_dict(class_id, name):
+    def make_class_schema_dict(class_id, name):
         class_obj = schema.Class(class_id, name)
         class_schema = schema.ClassSchema(only=('pk', 'sk', 'data'))
         class_schema.context = {
