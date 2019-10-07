@@ -8,10 +8,19 @@ Classes:
 
   memorySize: 128
   timeout: 10
-  role: CrudRole
+  role: ClassesCrudRole
   events:
     - http:
         path: classes/{class_id}
+        method: get
+        authorizer: aws_iam
+        cors: true
+        request:
+          parameters:
+            paths:
+              class_id: true
+    - http:
+        path: classes/{class_id}/students
         method: get
         authorizer: aws_iam
         cors: true
@@ -26,6 +35,36 @@ Classes:
         cors: true
     - http:
         path: classes
+        method: patch
+        authorizer: aws_iam
+        cors: true
+Students:
+  handler: lambda_functions/students.handler
+  description: Create class in table
+  package:
+    include:
+      - lambda_functions/students.py
+
+  memorySize: 128
+  timeout: 10
+  role: StudentsCrudRole
+  events:
+    - http:
+        path: students/{student_id}
+        method: get
+        authorizer: aws_iam
+        cors: true
+        request:
+          parameters:
+            paths:
+              class_id: true
+    - http:
+        path: students
+        method: post
+        authorizer: aws_iam
+        cors: true
+    - http:
+        path: students
         method: patch
         authorizer: aws_iam
         cors: true

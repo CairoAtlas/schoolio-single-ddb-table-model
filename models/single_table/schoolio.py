@@ -16,6 +16,7 @@ class Schoolio(Model):
     pk = UnicodeAttribute(hash_key=True)
     sk = UnicodeAttribute(range_key=True)
     data = UnicodeAttribute(null=True)
+    class_id = UnicodeAttribute(null=True)
     date = UTCDateTimeAttribute(null=True)
     first_name = UnicodeAttribute(null=True)
     grade = NumberAttribute(null=True)

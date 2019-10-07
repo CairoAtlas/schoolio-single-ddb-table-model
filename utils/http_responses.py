@@ -67,3 +67,20 @@ def http_400_response(response_body_str=None, response_body_dict=None, headers=N
         response.update({'headers': headers})
 
     return response
+
+
+def http_500_response(response_body_str=None, response_body_dict=None, headers=None):
+    response = {
+        'statusCode': 500
+    }
+
+    if response_body_dict:
+        response.update({'body': json.dumps(response_body_dict)})
+
+    if response_body_str:
+        response.update({'body': response_body_str})
+
+    if headers:
+        response.update({'headers': headers})
+
+    return response
