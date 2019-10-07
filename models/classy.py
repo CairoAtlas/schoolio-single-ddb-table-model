@@ -19,7 +19,7 @@ class Class:
         items_to_update = self._get_items_to_update()
         for item in items_to_update:
             item.update(actions=[
-                Schoolio.name.set(self.name)
+                Schoolio.data.set(self.name)
             ])
         return schema.Class(self.class_id, self.name).__dict__
 
@@ -42,7 +42,7 @@ class Class:
     @staticmethod
     def get_class_by_id(class_id):
         schoolio_class_record = Schoolio.get(f'{SCHOOLIO}_{class_id}', class_id)
-        return schema.Class(schoolio_class_record.sk, schoolio_class_record.name).__dict__
+        return schema.Class(schoolio_class_record.sk, schoolio_class_record.data).__dict__
 
     @staticmethod
     def _make_schoolio_object(class_id, name):
@@ -54,9 +54,10 @@ class Class:
     @staticmethod
     def _make_class_schema_dict(class_id, name):
         class_obj = schema.Class(class_id, name)
-        class_schema = schema.ClassSchema(only=('name', 'pk', 'sk'))
+        class_schema = schema.ClassSchema(only=('pk', 'sk', 'data'))
         class_schema.context = {
             'pk': f'{SCHOOLIO}_{class_id}',
-            'sk': class_id
+            'sk': class_id,
+            'data': name
         }
         return class_schema.dump(class_obj)

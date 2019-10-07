@@ -9,7 +9,6 @@ class Class:
 
 class ClassSchema(Schema):
     class_id = fields.Str(load_only=True)
-    name = fields.Str(required=True)
     pk = fields.Method('build_pk')
     sk = fields.Method('build_sk')
     data = fields.Method('build_data')
