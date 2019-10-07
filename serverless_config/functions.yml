@@ -1,5 +1,5 @@
 ---
-ClassesCreate:
+Classes:
   handler: lambda_functions/classes.handler
   description: Create class in table
   package:

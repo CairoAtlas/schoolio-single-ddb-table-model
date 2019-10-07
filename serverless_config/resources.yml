@@ -52,7 +52,7 @@ Resources:
                 Action:
                   - logs:PutLogEvents
                   - logs:CreateLogStream
-                Resource: arn:aws:logs:us-east-1:#{AWS::AccountId}:log-group:/aws/lambda/${self:service}-${self:provider.stage}-ClassesCreate:*
+                Resource: arn:aws:logs:us-east-1:#{AWS::AccountId}:log-group:/aws/lambda/${self:service}-${self:provider.stage}-Classes:*
               - Effect: "Allow"
                 Action:
                   - dynamodb:BatchWriteItem
