@@ -69,41 +69,41 @@ Resources:
                   - dynamodb:Query
                 Resource:
                   - arn:aws:dynamodb:us-east-1:#{AWS::AccountId}:table/${self:service}-${self:provider.stage}/index/data_index
-    StudentsCrudRole:
-      Type: AWS::IAM::Role
-      Properties:
-        RoleName: ${self:service}-${self:provider.stage}-StudentsCrudRole
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service:
-                  - lambda.amazonaws.com
-              Action: sts:AssumeRole
-        Policies:
-          - PolicyName: ${self:service}-${self:provider.stage}-StudentsCrudPolicy
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-                - Effect: "Allow"
-                  Action:
-                    - logs:PutLogEvents
-                    - logs:CreateLogStream
-                  Resource: arn:aws:logs:us-east-1:#{AWS::AccountId}:log-group:/aws/lambda/${self:service}-${self:provider.stage}-Students:*
-                - Effect: "Allow"
-                  Action:
-                    - dynamodb:BatchWriteItem
-                    - dynamodb:DeleteItem
-                    - dynamodb:DescribeTable
-                    - dynamodb:GetItem
-                    - dynamodb:PutItem
-                    - dynamodb:Query
-                    - dynamodb:UpdateItem
-                  Resource:
-                    - Fn::GetAtt: [SeventhGradeTable, Arn]
-                - Effect: Allow
-                  Action:
-                    - dynamodb:Query
-                  Resource:
-                    - arn:aws:dynamodb:us-east-1:#{AWS::AccountId}:table/${self:service}-${self:provider.stage}/index/data_index
+  StudentsCrudRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ${self:service}-${self:provider.stage}-StudentsCrudRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: ${self:service}-${self:provider.stage}-StudentsCrudPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - logs:PutLogEvents
+                  - logs:CreateLogStream
+                Resource: arn:aws:logs:us-east-1:#{AWS::AccountId}:log-group:/aws/lambda/${self:service}-${self:provider.stage}-Students:*
+              - Effect: "Allow"
+                Action:
+                  - dynamodb:BatchWriteItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:DescribeTable
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:Query
+                  - dynamodb:UpdateItem
+                Resource:
+                  - Fn::GetAtt: [SeventhGradeTable, Arn]
+              - Effect: Allow
+                Action:
+                  - dynamodb:Query
+                Resource:
+                  - arn:aws:dynamodb:us-east-1:#{AWS::AccountId}:table/${self:service}-${self:provider.stage}/index/data_index
